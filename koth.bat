@@ -4,7 +4,7 @@ REM nodejail KotH - 제출/상태조회 통합 런처 (Python 불필요)
 REM 사용법:
 REM   koth.bat                         -> 상태만 조회(폴링)
 REM   koth.bat status                  -> 상태만 조회(폴링)
-REM   koth.bat submit payload-modern.js-> 해당 파일 제출 후 결과까지 폴링
+REM   koth.bat submit payload-safe.js  -> 해당 파일 제출 후 결과까지 폴링
 REM   koth.bat submit payload.js TOKEN http://204.48.30.25:9000
 set "PS1=%TEMP%\koth_%RANDOM%%RANDOM%.ps1"
 set "B64=%TEMP%\koth_%RANDOM%%RANDOM%.b64"

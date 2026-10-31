@@ -64,5 +64,5 @@ try {
 
 Write-Host ''
 Write-Host '=> 위 응답에서 node 버전(vXX.X.X) / 플랫폼 / gBM=function 여부를 확인하세요.'
-Write-Host '   - gBM=function 이고 v20.16+ 또는 v22.3+ 이면 payload-modern.js(264B) 사용 가능'
+Write-Host '   - gBM=function 이고 v20.16+ 또는 v22.3+ 이면 payload.js(264B) 사용 가능'
 Write-Host '   - 버전이 안 보이면: 서버가 틀린 제출의 stdout 을 돌려주지 않는 것 (정찰 불가)'

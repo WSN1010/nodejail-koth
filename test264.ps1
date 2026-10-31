@@ -1,9 +1,9 @@
 $ErrorActionPreference = 'Stop'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-# nodejail KotH - 264B(payload-modern.js, getBuiltinModule) 차등 테스트
+# nodejail KotH - 264B(payload.js, getBuiltinModule) 차등 테스트
 #   ready  best=264  -> 서버 node 가 getBuiltinModule 지원 => 264B 채택 가능
-#   rejected (error before output) -> 미지원 => 266B(payload.js) 가 바닥
+#   rejected (error before output) -> 미지원 => 266B(payload-safe.js) 가 바닥
 # 실패해도 활성(랭킹) 제출은 그대로라 안전.
 
 $Base  = $env:KOTH_BASE;  if (-not $Base)  { $Base  = 'http://204.48.30.25:9000' }
@@ -57,13 +57,13 @@ while ($true) {
     if ($t) { Write-Host ('#' + $watchId + ' status=' + $t.status) }
     if ($t -and $t.status -ne 'queued' -and $t.status -ne 'running') {
         Write-Host ''
-        if ($t.status -eq 'ready' -and $t.best -ne $null) {
-            Write-Host ('>>> 성공: ready, best=' + $t.best)
-            Write-Host '>>> 서버 node 가 getBuiltinModule 지원 => 264B 사용 가능!'
+        if ($t.status -eq 'ready') {
+            Write-Host ('>>> 성공: ready, best=' + $(if($t.best -ne $null){$t.best}else{'(채점중, 곧 264)'}))
+            Write-Host '>>> 서버 node 가 getBuiltinModule 지원 => 264B 사용 가능! (활성 제출로 등록됨)'
         } else {
             Write-Host ('>>> 거부: ' + $t.status + '  reason=' + $t.reason)
             if ($t.reason -match 'error before') {
-                Write-Host '>>> getBuiltinModule 미지원 => 266B(payload.js) 가 바닥. 활성 제출(#7,266)은 그대로 안전.'
+                Write-Host '>>> getBuiltinModule 미지원 => 266B(payload-safe.js) 가 바닥. 활성 제출(#7,266)은 그대로 안전.'
             } else {
                 Write-Host '>>> (예상외 사유 — reason 확인)'
             }
